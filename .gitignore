@@ -3,3 +3,15 @@
 ################################################################################
 
 /.vs/JWTClientCredentialExample/v15
+/.vs/ClientCredentialAuthFlow/v15
+/.vs/config
+/.vs
+/BFF/bin/Debug/netcoreapp2.1
+/BFF/obj
+/Component/bin/Debug/netcoreapp2.1
+/Component/obj/Debug/netcoreapp2.1
+/Component/obj/Release/netcoreapp2.1
+/JWTClientCredentialExample/obj/Debug/netcoreapp2.2
+/JWTClientCredentialExample/obj/Release/netcoreapp2.2
+/JWTClientCredentialExample/obj
+/Component/obj
