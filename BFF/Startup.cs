@@ -12,9 +12,9 @@ namespace BFF
 {
     public class Startup
     {
-        private readonly string _tokenAddress = "https://chrisbriggstest.auth.eu-central-1.amazoncognito.com/oauth2/token";
-        private readonly string _clientId = "1kb7f149f05v5dpd1q1jt7j2q0";
-        private readonly string _clientSecret = "1v9l0h33c1c2muroh74jghrssq5ll766h6he9snrlbj2merm0uig";
+        private readonly string _tokenAddress = "";
+        private readonly string _clientId = "";
+        private readonly string _clientSecret = "";
         private readonly Uri _componentUrl = new Uri("https://localhost:5003");
 
         public Startup(IConfiguration configuration)

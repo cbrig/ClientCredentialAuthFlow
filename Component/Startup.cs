@@ -18,10 +18,10 @@ namespace Component
 {
     public class Startup
     {
-        private static readonly string _authority = "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_8HFvl9Xi5";
-        private static readonly string _tokenUrl = "https://chrisbriggstest.auth.eu-central-1.amazoncognito.com/oauth2/token";
-        private static readonly string _clientId = "1kb7f149f05v5dpd1q1jt7j2q0";
-        private static readonly string _clientSecret = "1v9l0h33c1c2muroh74jghrssq5ll766h6he9snrlbj2merm0uig";
+        private static readonly string _authority = "";
+        private static readonly string _tokenUrl = "";
+        private static readonly string _clientId = "";
+        private static readonly string _clientSecret = "";
         private static readonly string _wellKnownConfiguration = $"{_authority}/.well-known/openid-configuration";
         private static readonly string _securityType = "oauth2";
 
