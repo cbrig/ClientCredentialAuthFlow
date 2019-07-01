@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace BFF
 {
@@ -16,7 +17,7 @@ namespace BFF
 
         public async Task<List<string>> GetValues()
         {
-            var response = await _client.GetAsync("api/values");
+            var response = await _client.GetAsync("api/Values");
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();

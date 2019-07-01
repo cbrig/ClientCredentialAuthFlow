@@ -10,9 +10,24 @@ namespace Component.Controllers
     public class ValuesController : ControllerBase
     {
         [HttpGet]
+        [Authorize("read")]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "Get", "value1" };
+        }
+
+        [HttpPost]
+        [Authorize("write")]
+        public ActionResult<IEnumerable<string>> Post()
+        {
+            return new string[] { "Post", "value2" };
+        }
+
+        [HttpDelete]
+        [Authorize("delete")]
+        public ActionResult<IEnumerable<string>> Delete()
+        {
+            return new string[] { "Delete", "value3" };
         }
     }
 }

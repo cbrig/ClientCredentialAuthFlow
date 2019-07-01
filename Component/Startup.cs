@@ -13,24 +13,20 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Component.Security;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Component
 {
     public class Startup
     {
         private static readonly string _authority = "";
-        private static readonly string _tokenUrl = "";
-        private static readonly string _clientId = "";
-        private static readonly string _clientSecret = "";
         private static readonly string _wellKnownConfiguration = $"{_authority}/.well-known/openid-configuration";
         private static readonly string _securityType = "oauth2";
 
         public Startup(IConfiguration configuration)
         {
             if (string.IsNullOrEmpty(_authority)) throw new Exception("StartUp - Authority is empty");
-            if (string.IsNullOrEmpty(_tokenUrl)) throw new Exception("StartUp - Token Url is empty");
-            if (string.IsNullOrEmpty(_clientId)) throw new Exception("StartUp - ClientId is empty");
-            if (string.IsNullOrEmpty(_clientSecret)) throw new Exception("StartUp - Client Secret is empty");
             if (string.IsNullOrEmpty(_wellKnownConfiguration)) throw new Exception("StartUp - Well known configuration URL is empty");
             if (string.IsNullOrEmpty(_securityType)) throw new Exception("StartUp - Security Type is empty");
 
@@ -78,6 +74,15 @@ namespace Component
                     };
                 });
 
+            services.AddAuthorization(options =>
+                {
+                    options.AddPolicy("read", policy => policy.Requirements.Add(new HasScopeRequirement("API/read", _authority)));
+                    options.AddPolicy("write", policy => policy.Requirements.Add(new HasScopeRequirement("API/write", _authority)));
+                    options.AddPolicy("delete", policy => policy.Requirements.Add(new HasScopeRequirement("API/delete", _authority)));
+                });
+
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
@@ -85,7 +90,7 @@ namespace Component
                 {
                     Type = _securityType,
                     Flow = "application",
-                    TokenUrl = _tokenUrl
+                    TokenUrl = _authority
                 });
 
                 options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
@@ -114,11 +119,6 @@ namespace Component
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                options.OAuthConfigObject = new OAuthConfigObject()
-                {
-                    ClientId = _clientId,
-                    ClientSecret = _clientSecret
-                };
             });
             app.UseAuthentication();
             app.UseHttpsRedirection();
