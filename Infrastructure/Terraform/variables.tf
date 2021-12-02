@@ -12,6 +12,7 @@ variable "application_name" {
   default = "ClientCredentialsExample"
 }
 
+
 variable "user_pool_name" {
   description = "The name of the user pool all the resources will use."
   default = "ClientCredentialsExample"
