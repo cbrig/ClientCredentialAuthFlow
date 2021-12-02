@@ -5,12 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 namespace Component.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class ValuesController : ControllerBase
     {
         [HttpGet]
-        [Authorize("read")]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "Get", "value1" };
