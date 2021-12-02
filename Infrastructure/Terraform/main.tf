@@ -25,7 +25,9 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   write_capacity = 20
   hash_key       = "UserId"
   range_key      = "GameTitle"
-  point_in_time_recovery = true
+  point_in_time_recovery {
+	  enabled = true
+  }
 
   attribute {
     name = "UserId"
