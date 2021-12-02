@@ -22,7 +22,7 @@ namespace BFF.Controllers
             try
             {
                 var values = await _componentService.GetValues();
-                return new JsonResult(values) { StatusCode = 200 };
+                return new JsonResult(values) { StatusCode = 200 }; 
             }
             catch (Exception e)
             {
