@@ -17,36 +17,47 @@ locals {
 	}
 }
 
-resource "aws_dynamodb_table" "booking_table" {
-    name            = "booking"
-    billing_mode    = "PAY_PER_REQUEST"
-	stream_enabled   = true
-	stream_view_type = "NEW_AND_OLD_IMAGES"
-    hash_key        = "PartitionKey"
-    range_key	    = "Id"
 
-    attribute {
-        name = "PartitionKey"
-        type = "S"
-    }
+resource "aws_dynamodb_table" "basic-dynamodb-table" {
+  name           = "GameScores"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "UserId"
+  range_key      = "GameTitle"
 
-    attribute {
-        name = "Id"
-        type = "S"
-    }
+  attribute {
+    name = "UserId"
+    type = "S"
+  }
 
-    attribute {
-        name = "Data"
-        type = "S"
-    }
+  attribute {
+    name = "GameTitle"
+    type = "S"
+  }
 
-    global_secondary_index {
-        name               = "DataIndex"
-		hash_key           = "PartitionKey"
-        range_key          = "Data"
-		projection_type	   = "ALL"
-    }
+  attribute {
+    name = "TopScore"
+    type = "N"
+  }
 
-    point_in_time_recovery {
-        enabled = true
-    }
+  ttl {
+    attribute_name = "TimeToExist"
+    enabled        = false
+  }
+
+  global_secondary_index {
+    name               = "GameTitleIndex"
+    hash_key           = "GameTitle"
+    range_key          = "TopScore"
+    write_capacity     = 10
+    read_capacity      = 10
+    projection_type    = "INCLUDE"
+    non_key_attributes = ["UserId"]
+  }
+
+  tags = {
+    Name        = "dynamodb-table-1"
+    Environment = "production"
+  }
+}
